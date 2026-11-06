@@ -1,0 +1,18 @@
+name: Validate Fairynails demo
+on:
+  push:
+    branches: [main, redesign/editorial-multipage-demo]
+  pull_request:
+    branches: [main]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Parse JavaScript
+        run: node --check assets/site.js
+      - name: Verify pages and booking/demo features
+        run: node --test test/site.test.mjs
