@@ -46,8 +46,10 @@ $("service").innerHTML='<option value="" disabled>'+t("serviceChoice")+'</option
 $("service").value=String(selectedService);updateSummary();renderSlots();renderAppointments();
 }
 function localDate(offset){
-const now=new Date();const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Athens",year:"numeric",month:"2-digit",day:"2-digit"}).format(now);
-const d=new Date(parts+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+offset);return d.toISOString().slice(0,10);
+const now=new Date();const parts=new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Athens",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(now);
+const get=type=>parts.find(part=>part.type===type).value;
+const dayString=get("year")+"-"+get("month")+"-"+get("day");
+const d=new Date(dayString+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+offset);return d.toISOString().slice(0,10);
 }
 const minDate=localDate(1),maxDate=localDate(60);
 $("date").min=minDate;$("date").max=maxDate;$("date").value=minDate;
